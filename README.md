@@ -205,7 +205,7 @@ MIT
 
 ## Pro version
 
-The Pro version of medusa-documents expands on the features of the free version with more advanced capabilities such as:
+The Pro version of medusa-product-reviews expands on the features of the free version with more advanced capabilities such as:
 - option to show/hide reviews
 - delete unwanted reviews
 - and a lot more.
