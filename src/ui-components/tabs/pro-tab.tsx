@@ -76,7 +76,7 @@ export const ProTab = () => {
             </Heading>
           </Grid>
           <Grid item>
-            <Link href="https://github.com/abdullah-afzal">
+            <Link href="https://github.com/abdullah-afzal" target="_blank">
               <Heading level='h1' color="purple">
                 abdullah-afzal
               </Heading>
@@ -92,7 +92,7 @@ export const ProTab = () => {
             </Text>
           </Grid>
           <Grid item>
-            <Link href="https://github.com/abdullah-afzal/medusa-product-reviews?tab=readme-ov-file#hide-pro-version-tab">
+            <Link href="https://github.com/abdullah-afzal/medusa-product-reviews?tab=readme-ov-file#hide-pro-version-tab" target="_blank">
               <Text>
                 How to hide this tab?
               </Text>
