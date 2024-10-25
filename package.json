@@ -1,6 +1,6 @@
 {
   "name": "medusa-product-reviews",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "A plugin that enables customer product reviews for your Medusa store.",
   "repository": {
     "type": "git",

@@ -36,7 +36,7 @@ export const Reviews = () => {
       <Toaster position="top-right"/>
       <Tabs.List >
         <Tabs.Trigger value='reviews'>Reviews</Tabs.Trigger>
-        {process.env.MEDUSA_ADMIN_MEDUSA_DOCUMENTS_HIDE_PRO === undefined && <Grid container justifyContent={'end'}>
+        {process.env.MEDUSA_ADMIN_PRODUCTS_REVIEWS_HIDE_PRO === undefined && <Grid container justifyContent={'end'}>
             <Tabs.Trigger value='pro' style={ { color: 'purple' }}>Pro version</Tabs.Trigger>
         </Grid>}
       </Tabs.List>

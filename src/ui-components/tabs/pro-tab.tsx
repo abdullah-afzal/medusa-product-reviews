@@ -21,7 +21,7 @@ export const ProTab = () => {
       <Grid container justifyContent={"center"} marginTop={6}>
         <Grid item>
           <Heading level='h1' style={ { color: 'purple'}}>
-            Manage documents on the next level
+            Manage Reviews on the next level
           </Heading>
         </Grid>
       </Grid>
