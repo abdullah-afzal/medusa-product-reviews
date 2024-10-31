@@ -87,7 +87,21 @@ export const defaultProductReviewRelations = ["images", "customer", "order", "pr
 async function _validatedCustomer(req: Request): Promise<Customer> {
   const customerService = req.scope.resolve<CustomerService>("customerService");
 
-  if (req.user?.customer_id) return await customerService.retrieve(req.user.customer_id);
+  if (req.user?.customer_id) {
+    const customer = await customerService.retrieve(req.user.customer_id, {
+      relations: ["orders", "orders.items.variant"],
+    });
+    const orderExists = customer.orders.some((order) => {
+      if (order.id === req.body.order_id) {
+        const productExists = order.items.some(
+          (item) => item.variant.product_id === req.body.product_id
+        );
+        return productExists;
+      }
+      return null;
+    });
+    return orderExists ? customer : null;
+  }
 
   return null;
 }
