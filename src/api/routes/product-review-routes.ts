@@ -82,7 +82,7 @@ export const routes: RouteConfig[] = [
   },
 ];
 
-export const defaultProductReviewRelations = ["images", "customer", "order", "product"];
+export const defaultProductReviewRelations = ["images", "product"];
 
 async function _validatedCustomer(req: Request): Promise<Customer> {
   const customerService = req.scope.resolve<CustomerService>("customerService");
@@ -189,7 +189,7 @@ async function productReviewByOrder(req: Request, res: Response) {
 async function updateProductReview(req: Request, res: Response) {
   const productReviewService = req.scope.resolve<ProductReviewService>("productReviewService");
 
-  const validated = await validator(UpdateProductReviewReq, req.body);
+  const validated = await validator(UpdateProductReviewReq, {...req.body, id: req.params.product_review_id});
 
   const customer = await _validatedCustomer(req);
 
