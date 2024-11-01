@@ -158,7 +158,7 @@ const plugins = [
 3. **`GET /admin/product-reviews`**
    - **Description**: Retrieves a list of product reviews based on the provided query parameters.
    - **Query Parameters**: Same as the `GET /store/product-reviews` endpoint.
-   - **Response**: Returns a JSON object containing an array of review objects and the total count.
+   - **Response**: Returns a JSON object containing an array of review objects, included customer and order relations, and the total count.
 
 4. **`POST /admin/product-reviews/:product_review_id`**
    - **Description**: Updates the reply to an existing product review by ID.

@@ -66,7 +66,7 @@ export const routes: RouteConfig[] = [
     requiredAuth: true,
     path: "/admin/product-reviews",
     method: "get",
-    handlers: [wrapHandler(listProductReviews)],
+    handlers: [wrapHandler(adminListProductReviews)],
   },
   {
     requiredAuth: true,
@@ -81,6 +81,8 @@ export const routes: RouteConfig[] = [
     handlers: [wrapHandler(deleteProductReview)],
   },
 ];
+
+export const defaultAdminProductReviewRelations = ["images", "product", "customer", "order"];
 
 export const defaultProductReviewRelations = ["images", "product"];
 
@@ -123,6 +125,49 @@ async function createProductReview(req: Request, res: Response) {
   res.json({ review });
 }
 
+async function adminListProductReviews(req: Request, res: Response) {
+  const productReviewService = req.scope.resolve<ProductReviewService>("productReviewService");
+  const orderService = req.scope.resolve<OrderService>("orderService");
+  
+  const validated = await validator(StoreGetProductReviewsParams, req.query);
+  
+  let filter = validated;
+
+  if (validated.order_id) {
+    const order = await orderService.retrieve(validated.order_id, {
+      relations: ["items", "items.variant", "items.variant.product"],
+    });
+
+    if (!order) throw new MedusaError(MedusaError.Types.INVALID_DATA, "No reviews found matching order");
+
+    filter.product_id = order?.items.map((item) => item.variant.product_id);
+    filter.customer_id = order?.customer_id;
+  }
+
+  const selector: Omit<StoreGetProductReviewsParams, "fields" | "expand" | "offset" | "limit"> = omit(
+    validated,
+    "fields",
+    "expand",
+    "offset",
+    "limit"
+  );
+
+  const [reviews, count] = await productReviewService.listAndCount(
+    {
+      ...(selector as Selector<ProductReview>),
+    },
+    {
+      order: { updated_at: "DESC" },
+      skip: validated.offset,
+      take: validated.limit,
+      select: validated.fields ? (validated.fields.split(",") as (keyof ProductReview)[]) : undefined,
+      relations: validated.expand ? [...new Set(validated.expand.split(","))] : defaultAdminProductReviewRelations,
+    }
+  );
+
+  res.status(200).json({ reviews, count });
+}
+
 async function listProductReviews(req: Request, res: Response) {
   const productReviewService = req.scope.resolve<ProductReviewService>("productReviewService");
   const orderService = req.scope.resolve<OrderService>("orderService");
@@ -139,7 +184,6 @@ async function listProductReviews(req: Request, res: Response) {
 
     filter.product_id = order?.items.map((item) => item.variant.product_id);
     filter.customer_id = order?.customer_id;
-    delete filter.order_id;
   }
 
   const selector: Omit<StoreGetProductReviewsParams, "fields" | "expand" | "offset" | "limit"> = omit(
