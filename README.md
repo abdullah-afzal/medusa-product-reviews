@@ -76,7 +76,7 @@ const plugins = [
 2. **`GET /store/product-reviews/stats`**
    - **Description**: Retrieves statistics for product reviews, including average rating and distribution by rating.
    - **Query Parameters**:
-     - `product_id`: (Required) The product ID for which to retrieve statistics.
+     - `product_id[]`: (Required) The product ID(s) for which to retrieve statistics.
    - **Response**: Returns a JSON object containing review statistics.
    - **Sample Response**:
      ```json
@@ -151,7 +151,7 @@ const plugins = [
 1. **`GET /admin/product-reviews/stats`**
    - **Description**: Retrieves statistics for product reviews, including average rating and distribution by rating.
    - **Query Parameters**:
-     - `product_id`: (Required) The product ID for which to retrieve statistics.
+     - `product_id[]`: (Required) The product ID(s) for which to retrieve statistics.
    - **Response**: Returns a JSON object containing review statistics (same format as store endpoint).
 
 
